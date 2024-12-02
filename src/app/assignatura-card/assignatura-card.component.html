@@ -1,0 +1,31 @@
+<div class="targeta-assignatura relative bg-white rounded-lg p-6 shadow-md w-full max-w-sm mx-auto hover:-translate-y-1 hover:shadow-lg transition-transform cursor-pointer" style="box-shadow: 0 -4px 6px rgba(0, 0, 0, 0.1), 0 2px 4px rgba(0, 0, 0, 0.1);">
+  <!-- Avatar amb la inicial de l'assignatura -->
+  <div class="flex items-center space-x-4">
+    <div [ngStyle]="{'background-color': generarColorAvatar(assignatura!.nom)}" class="w-16 h-16 text-white rounded-full flex items-center justify-center text-3xl font-semibold">
+      {{ assignatura!.nom.charAt(0).toUpperCase() }} <!-- Inicial de l'assignatura -->
+    </div>
+    <!-- Nom de l'assignatura -->
+    <h3 *ngIf="assignatura?.nom" class="text-2xl font-semibold">{{ assignatura.nom }}</h3>
+  </div>
+
+  <!-- Menú rodó de tres punts  -->
+  <div class="absolute top-0 right-0">
+    <button (click)="toggleMenu(); $event.stopPropagation()" class="p-2 rounded-full hover:bg-gray-200 menu-button">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v.01M12 12v.01M12 18v.01" />
+      </svg>
+    </button>
+
+    <!-- Menú contextual amb position -->
+    <div *ngIf="menuObert" class="absolute top-full right-0 mt-2 w-40 bg-white rounded-md shadow-lg z-50">
+      <ul>
+        <li>
+          <button (click)="editarAssignatura(); $event.stopPropagation()" class="block px-4 py-2 text-gray-800 hover:bg-gray-100 w-full text-left">Editar</button>
+        </li>
+        <li>
+          <button (click)="eliminarAssignatura(); $event.stopPropagation()" class="block px-4 py-2 text-red-600 hover:bg-gray-100 w-full text-left">Eliminar</button>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>

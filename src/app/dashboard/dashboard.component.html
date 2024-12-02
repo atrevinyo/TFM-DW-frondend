@@ -1,0 +1,32 @@
+<app-menusuperior
+  [mostrarBotoAfegirAssignatura]="mostrarAssignaturaList"
+  (onAfegirAssignatura)="obrirModalPerAfegirAssignatura()">
+</app-menusuperior>
+
+<div class="container mx-auto mt-8">
+  <!-- Component per a la llista d’assignatures -->
+  <ng-container *ngIf="mostrarAssignaturaList">
+    <app-assignatura-list
+      [assignatures]="assignatures"
+      (onAssignaturaSelected)="seleccionarAssignatura($event)"
+      (onEliminarAssignatura)="eliminarAssignatura($event)"
+      (onEditarAssignatura)="editarAssignatura($event)">
+    </app-assignatura-list>
+
+    {{assignatures | json}}
+
+    {{materies | json}}
+
+  </ng-container>
+
+  <!-- Component per a les rutes fills, com assignatura/:id -->
+  <router-outlet></router-outlet>
+</div>
+
+<!-- Formulari modal per crear o editar una assignatura -->
+<app-assignatura-form *ngIf="modalObert"
+  [materies]="materies"
+  [assignatura]="assignaturaAEditar"
+  (onAssignaturaAfegida)="guardarAssignatura($event)"
+  (onTancar)="tancarModal()">
+</app-assignatura-form>

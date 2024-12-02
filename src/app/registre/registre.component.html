@@ -1,0 +1,55 @@
+
+
+<div class="min-h-screen flex items-center justify-center bg-gray-100">
+  <div class="p-6 bg-white rounded-md shadow-lg max-w-md w-full mx-auto">
+    <h2 class="text-xl font-semibold mb-4 text-center">Registra't</h2>
+
+    <form [formGroup]="registreForm" (ngSubmit)="onSubmit()">
+      <div class="mb-4">
+        <label for="nom" class="block text-gray-700 font-medium">Nom</label>
+        <input
+          id="nom"
+          type="text"
+          formControlName="nom"
+          class="mt-1 px-3 py-2 border border-gray-300 rounded-md w-full"
+          placeholder="Introdueix el teu nom"
+        />
+      </div>
+
+      <div class="mb-4">
+        <label for="email" class="block text-gray-700 font-medium">Email</label>
+        <input
+          id="email"
+          type="email"
+          formControlName="email"
+          class="mt-1 px-3 py-2 border border-gray-300 rounded-md w-full"
+          placeholder="Introdueix el teu correu electrònic"
+        />
+      </div>
+
+      <div class="mb-4">
+        <label for="password" class="block text-gray-700 font-medium">Contrasenya</label>
+        <input
+          id="password"
+          type="password"
+          formControlName="password"
+          class="mt-1 px-3 py-2 border border-gray-300 rounded-md w-full"
+          placeholder="Introdueix la teva contrasenya"
+        />
+      </div>
+
+      <button
+        type="submit"
+        class="px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 transition disabled:opacity-50 w-full"
+        [disabled]="registreForm.invalid"
+      >
+        Registrar-se
+      </button>
+    </form>
+
+    <p class="mt-4 text-center text-gray-600">
+      Ja tens un compte?
+      <a routerLink="/login" class="text-blue-600 hover:underline">Inicia sessió</a>
+    </p>
+  </div>
+</div>

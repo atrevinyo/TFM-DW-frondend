@@ -1,0 +1,119 @@
+<div class="p-4 bg-gray-50 rounded-md shadow-lg">
+  <!-- Contenidor per al text i el botó alineats horitzontalment -->
+  <div class="flex items-center justify-between mb-4">
+    <h2 class="text-xl font-semibold">Llista d'Activitats</h2>
+
+    <!-- Botó per afegir una nova activitat -->
+    <button
+      (click)="afegirActivitat()"
+      class="w-10 h-10 bg-blue-600 text-white rounded-full flex items-center justify-center hover:bg-blue-700 transition"
+    >
+      +
+    </button>
+  </div>
+
+  <!-- Llista d'activitats -->
+  <ul class="space-y-3">
+    <li *ngFor="let activitat of assignatura.activitats">
+      <!-- Header de l'activitat per desplegar-la -->
+      <div
+        (click)="toggleActivitat(activitat.id)"
+        class="p-4 bg-white rounded-lg shadow-sm cursor-pointer hover:bg-gray-100 transition flex items-center"
+      >
+        <!-- Data de l'activitat -->
+        <div class="text-gray-500 w-1/6">
+          {{ activitat.data | date: 'dd/MM/yyyy' }}
+        </div>
+
+        <!-- Nom de l'activitat -->
+        <h4 class="font-medium text-gray-700 flex-1 px-4">{{ activitat.nom }}</h4>
+
+        <!-- Botó de 3 punts per obrir el menú -->
+        <div class="relative">
+          <button
+            (click)="toggleMenuContextual(activitat.id); $event.stopPropagation()"
+            class="w-8 h-8 bg-gray-200 text-gray-600 rounded-full flex items-center justify-center hover:bg-gray-300 transition"
+          >
+            &#x22EE; <!-- 3 punts verticals -->
+          </button>
+
+          <!-- Menú amb les opcions Editar, Eliminar i Qualificar -->
+          <div
+            *ngIf="menuObertId === activitat.id"
+            class="absolute right-0 mt-2 w-40 bg-white border rounded-md shadow-lg z-50 menu-contextual"
+          >
+            <ul>
+              <li
+                (click)="editarActivitat(activitat); $event.stopPropagation()"
+                class="px-4 py-2 hover:bg-gray-100 cursor-pointer"
+              >
+                ✏️ Editar
+              </li>
+              <li
+                (click)="eliminarActivitat(activitat); $event.stopPropagation()"
+                class="px-4 py-2 hover:bg-gray-100 cursor-pointer text-red-600"
+              >
+                ❌ Eliminar
+              </li>
+              <li
+                (click)="qualificarActivitat(activitat); $event.stopPropagation()"
+                class="px-4 py-2 hover:bg-gray-100 cursor-pointer text-green-600"
+              >
+                📋 Qualificar
+              </li>
+            </ul>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Contingut desplegable de l'activitat -->
+      <div *ngIf="activitatDesplegada === activitat.id" class="p-4 mt-2 bg-gray-100 rounded-lg shadow-inner">
+        <p class="text-gray-600">Detalls de l'activitat "{{ activitat.nom }}"</p>
+        <p class="text-gray-500">Data: {{ activitat.data | date: 'dd/MM/yyyy' }}</p>
+
+        <!-- Llista de Competències -->
+        <div class="mt-4">
+          <h5 class="font-semibold text-gray-700 mb-2">Competències:</h5>
+          <div class="flex space-x-2">
+            <span
+              *ngFor="let competencia of activitat.competencies"
+              class="px-2 py-1 bg-blue-100 text-blue-800 rounded-md text-xs font-semibold"
+              title="{{ competencia.descripcio }}"
+            >
+              {{ competencia.codi }}
+            </span>
+          </div>
+        </div>
+      </div>
+    </li>
+  </ul>
+
+  <!-- Formulari modal per afegir o editar activitats -->
+  <app-activitat-form-modal
+    *ngIf="mostraFormulariModal"
+    [activitat]="activitatSeleccionada"
+    [availableCompetencies]="assignatura.materia.competencies"
+    (onSave)="guardarActivitat($event)"
+    (onCancel)="cancelFormulari()"
+  ></app-activitat-form-modal>
+
+  <div *ngIf="mostraQualificarModal" class="fixed inset-0 bg-gray-800 bg-opacity-75 flex items-center justify-center z-50">
+    <div class="bg-white rounded-lg shadow-lg p-6 max-w-2xl w-full">
+      <!-- Contingut del component de qualificació -->
+      <app-qualificar-activitat
+        *ngIf="activitatSeleccionada"
+        [activitat]="activitatSeleccionada!"
+        [alumnes]="assignatura.alumnes"
+      ></app-qualificar-activitat>
+
+      <!-- Botó per tancar el modal -->
+      <button
+        (click)="tancarQualificarModal()"
+        class="mt-4 px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600"
+      >
+        Tancar
+      </button>
+    </div>
+  </div>
+</div>

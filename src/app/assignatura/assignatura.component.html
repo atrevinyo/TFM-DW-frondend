@@ -1,0 +1,13 @@
+<mat-tab-group>
+  <div *ngIf="assignatura">
+    <!-- Pestanya per la llista d'alumnes -->
+    <mat-tab label="Alumnes">
+      <app-alumne-list [assignatura]="assignatura!"></app-alumne-list>
+    </mat-tab>
+
+    <!-- Pestanya per la llista d'activitats -->
+    <mat-tab label="Activitats">
+      <app-activitat-list [assignatura]="assignatura!"></app-activitat-list>
+    </mat-tab>
+  </div>
+</mat-tab-group>

@@ -1,0 +1,36 @@
+
+<div class="p-4 bg-white rounded-md shadow-lg max-w-md mx-auto">
+  <h2 class="text-xl font-semibold mb-4">{{ alumne ? 'Editar Alumne' : 'Afegir Alumne' }}</h2>
+
+  <!-- Formulari per afegir o editar alumne -->
+  <form [formGroup]="alumneForm" (ngSubmit)="guardar()" class="space-y-4">
+    <div>
+      <label for="nom" class="block text-gray-700 font-medium">Nom de l'alumne</label>
+      <input
+        id="nom"
+        type="text"
+        required
+        formControlName="nom"
+        placeholder="Escriu el nom"
+        class="mt-1 px-3 py-2 border border-gray-300 rounded-md w-full focus:outline-none focus:ring-2 focus:ring-blue-500"
+      />
+    </div>
+
+    <div class="flex space-x-4">
+      <button
+        type="submit"
+        class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition disabled:opacity-50"
+        [disabled]="alumneForm.invalid"
+      >
+        Guardar
+      </button>
+      <button
+        type="button"
+        (click)="cancelar()"
+        class="px-4 py-2 bg-gray-500 text-white rounded-md hover:bg-gray-600 transition"
+      >
+        Cancel·lar
+      </button>
+    </div>
+  </form>
+</div>

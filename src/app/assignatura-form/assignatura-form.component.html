@@ -1,0 +1,52 @@
+<div class="fixed inset-0 bg-gray-800 bg-opacity-50 flex justify-center items-center z-50">
+  <div class="bg-white rounded-lg p-6 w-1/3">
+    <h2 class="text-xl font-semibold mb-4">Crear una nova assignatura</h2>
+
+    <form [formGroup]="assignaturaForm" (ngSubmit)="afegirAssignatura()">
+      <div class="mb-4">
+        <label for="nom" class="block text-gray-700">Nom de l'assignatura</label>
+        <input
+          id="nom"
+          formControlName="nom"
+          type="text"
+          class="w-full p-2 border border-gray-300 rounded-md"
+          placeholder="Escriu el nom de l'assignatura"
+        />
+        <!-- <div *ngIf="assignaturaForm.get('nom')?.invalid && assignaturaForm.get('nom')?.touched" class="text-red-500">
+          El nom de l'assignatura és obligatori
+        </div> -->
+      </div>
+
+      <div class="mb-4">
+        <label for="materia" class="block text-gray-700">Matèria</label>
+        <select
+
+        formControlName="materia"
+        [compareWith]="compareMateries"
+        class="mt-1 block w-full px-3 py-2 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+      >
+        <option value="" disabled selected>Selecciona una matèria</option>
+        <option *ngFor="let materia of materies" [ngValue]="materia">{{ materia.nom }}</option>
+      </select>
+      </div>
+
+
+      <div class="flex justify-end">
+        <button type="button" (click)="tancarModal()" class="mr-4 px-4 py-2 bg-gray-500 text-white rounded">
+          Cancel·lar
+        </button>
+        <button type="submit" [disabled]="assignaturaForm.invalid" class="px-4 py-2 bg-blue-600 text-white rounded">
+          Afegir
+        </button>
+      </div>
+    </form>
+  </div>
+
+
+
+
+</div>
+
+
+
+

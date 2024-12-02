@@ -1,0 +1,9 @@
+/* Mostra el tooltip quan el quadrat de la competència és seleccionat */
+.relative:hover .tooltip-content {
+  display: block;
+  /* word-wrap: break-word; Trenca només si la paraula és massa llarga */
+  max-width: 400px
+  border: 1px solid red;
+
+}
+

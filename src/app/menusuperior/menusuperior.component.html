@@ -1,0 +1,31 @@
+<mat-toolbar class="text-gray-800 border-b border-gray-300 justify-between">
+  <!-- Logo i títol amb enllaç a dashboard -->
+  <div class="flex items-center space-x-2" (click)="navigateToDashboard()" style="cursor: pointer;">
+    <img src="logo.webp" alt="Logo" class="w-12 h-12">
+    <span class="text-2xl font-bold">App-notes</span>
+  </div>
+
+  <!-- Botons de la dreta -->
+  <div class="flex items-center space-x-4">
+    <!-- Botó per afegir assignatura  -->
+    <button
+      mat-icon-button
+      *ngIf="mostrarBotoAfegirAssignatura"
+      (click)="afegirAssignatura()"
+      matTooltip="Afegeix una nova assignatura"
+      aria-label="Afegir assignatura"
+    >
+      <mat-icon>add</mat-icon>
+    </button>
+
+    <!-- Botó de tancar sessió  -->
+    <button
+      mat-button
+      *ngIf="isLoggedIn"
+      (click)="logout()"
+      aria-label="Tanca sessió"
+    >
+      Tanca sessió
+    </button>
+  </div>
+</mat-toolbar>

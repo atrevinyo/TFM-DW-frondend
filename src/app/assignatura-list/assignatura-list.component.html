@@ -1,0 +1,15 @@
+<div class="grid grid-cols-3 gap-4 ">
+  <app-assignatura-card
+    *ngFor="let assignatura of assignatures"
+    [assignatura]="assignatura"
+    [menuObert]="menuObertId === assignatura.id"
+    (onToggleMenu)="toggleMenu(assignatura.id)"
+    (click)="seleccionarAssignatura(assignatura)"
+    (onEliminarAssignatura)="eliminarAssignatura($event)"
+    (onEditarAssignatura)="editarAssignatura($event)">
+  </app-assignatura-card>
+</div>
+
+
+
+<!-- class="bg-white rounded-lg p-6 shadow-md transition-transform transform hover:-translate-y-2 hover:shadow-lg cursor-pointer"> -->

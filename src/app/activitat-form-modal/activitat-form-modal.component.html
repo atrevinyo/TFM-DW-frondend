@@ -1,0 +1,83 @@
+<div class="fixed inset-0 bg-gray-800 bg-opacity-75 flex items-center justify-center z-50">
+  <div class="bg-white rounded-lg shadow-lg p-6 max-w-lg w-full">
+    <h2 class="text-xl font-semibold mb-4">{{ activitat ? 'Editar Activitat' : 'Afegir Activitat' }}</h2>
+
+    <!-- Formulari per a l'activitat -->
+    <form [formGroup]="activitatForm" (ngSubmit)="onSubmit()" class="space-y-4">
+      <!-- Nom de l'activitat -->
+      <div>
+        <label for="nom" class="block text-gray-700 font-medium">Nom de l'activitat</label>
+        <input
+          id="nom"
+          type="text"
+          formControlName="nom"
+          placeholder="Nom de l'activitat"
+          class="mt-1 px-3 py-2 border border-gray-300 rounded-md w-full"
+        />
+      </div>
+
+      <!-- Descripció de l'activitat -->
+      <div>
+        <label for="descripcio" class="block text-gray-700 font-medium">Descripció</label>
+        <textarea
+          id="descripcio"
+          formControlName="descripcio"
+          rows="4"
+          placeholder="Descripció de l'activitat"
+          class="mt-1 px-3 py-2 border border-gray-300 rounded-md w-full"
+        ></textarea>
+      </div>
+
+      <!-- Data de l'activitat -->
+      <div>
+        <label for="data" class="block text-gray-700 font-medium">Data</label>
+        <input
+          id="data"
+          type="date"
+          formControlName="data"
+          class="mt-1 px-3 py-2 border border-gray-300 rounded-md w-full"
+        />
+      </div>
+
+      <!-- Selecció de Competències -->
+      <div>
+        <label class="block text-gray-700 font-medium mb-2">Competències</label>
+        <div class="flex flex-wrap gap-2">
+          <div
+            *ngFor="let comp of availableCompetencies"
+            (click)="toggleCompetencia(comp.codi)"
+            [ngClass]="{'bg-blue-200': isCompetenciaSelected(comp.codi), 'bg-gray-200': !isCompetenciaSelected(comp.codi)}"
+            class="px-2 py-1 cursor-pointer rounded-md text-xs font-semibold hover:bg-blue-300 relative"
+          >
+            <!-- Tooltip amb la descripció de la competència -->
+            <span class="tooltip-content absolute bottom-full mb-1 hidden p-2 text-sm text-white bg-black rounded-md shadow-lg">
+              {{ comp.descripcio }}
+            </span>
+            {{ comp.codi }}
+          </div>
+        </div>
+      </div>
+
+      <!-- Botons d'acció -->
+      <div class="flex justify-end space-x-4 mt-6">
+        <!-- Botó de cancel·lar -->
+        <button
+          type="button"
+          (click)="closeModal()"
+          class="px-4 py-2 bg-gray-500 text-white rounded-md hover:bg-gray-600"
+        >
+          Cancel·lar
+        </button>
+
+        <!-- Botó de guardar -->
+        <button
+          type="submit"
+          [disabled]="activitatForm.invalid"
+          class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700"
+        >
+          {{ activitat ? 'Actualitzar' : 'Afegir' }}
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

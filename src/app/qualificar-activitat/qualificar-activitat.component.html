@@ -1,0 +1,42 @@
+<div class="p-4 bg-gray-50 rounded-md shadow-lg">
+  <h2 class="text-xl font-semibold mb-4">Qualificar Activitat: {{ activitat.nom }}</h2>
+
+  <table class="min-w-full bg-white">
+    <thead>
+      <tr>
+        <!-- Capçalera amb el nom de l'alumne -->
+        <th class="px-6 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-sm font-semibold text-gray-600">
+          Alumne
+        </th>
+        <!-- Columnes per cada competència -->
+        <th
+          *ngFor="let competencia of activitat.competencies"
+          class="px-6 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-sm font-semibold text-gray-600"
+        >
+          {{ competencia.codi }}
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- Fila per cada alumne -->
+      <tr *ngFor="let alumne of alumnes">
+        <!-- Nom de l'alumne -->
+        <td class="px-6 py-4 border-b border-gray-200 text-sm text-gray-600">
+          {{ alumne.nom }}
+        </td>
+        <!-- Cel·la de nota per cada competència -->
+        <td
+          *ngFor="let competencia of activitat.competencies"
+          class="px-6 py-4 border-b border-gray-200 text-sm text-gray-600"
+        >
+          <input
+            type="number"
+            class="w-16 p-1 border border-gray-300 rounded"
+            [value]="getNota(alumne, competencia.codi)"
+            (change)="onNotaChange(alumne, competencia.codi, $event)"
+          />
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
