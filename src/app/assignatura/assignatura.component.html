@@ -1,13 +1,17 @@
-<mat-tab-group>
+<mat-tab-group dynamicHeight>
   <div *ngIf="assignatura">
     <!-- Pestanya per la llista d'alumnes -->
     <mat-tab label="Alumnes">
-      <app-alumne-list [assignatura]="assignatura!"></app-alumne-list>
+      <div class="tab-content">
+        <app-alumne-list [assignatura]="assignatura!"></app-alumne-list>
+      </div>
     </mat-tab>
 
     <!-- Pestanya per la llista d'activitats -->
     <mat-tab label="Activitats">
-      <app-activitat-list [assignatura]="assignatura!"></app-activitat-list>
+      <div class="tab-content">
+        <app-activitat-list [assignatura]="assignatura!"></app-activitat-list>
+      </div>
     </mat-tab>
   </div>
 </mat-tab-group>

@@ -4,13 +4,15 @@ import { CommonModule } from '@angular/common';
 import {  Alumne, Assignatura } from '../models/models';
 import { AssignaturesService } from '../services/assignatures.service';
 import { ToastrService } from 'ngx-toastr';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-alumne-list',
   templateUrl: './alumne-list.component.html',
   styleUrls: ['./alumne-list.component.css'],
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, MatMenuModule, MatIconModule],
 })
 export class AlumneListComponent implements OnInit {
   @Input() assignatura!: Assignatura;

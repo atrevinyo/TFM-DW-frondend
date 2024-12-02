@@ -1,4 +1,4 @@
-<div class="p-4 bg-gray-50 rounded-md shadow-lg">
+<div class="p-6 bg-white rounded-md shadow-md relative">
   <!-- Contenidor per al text i el botó alineats horitzontalment -->
   <div class="flex items-center justify-between mb-4">
     <h2 class="text-xl font-semibold">Llista d'Activitats</h2>
@@ -13,57 +13,34 @@
   </div>
 
   <!-- Llista d'activitats -->
-  <ul class="space-y-3">
-    <li *ngFor="let activitat of assignatura.activitats">
+  <div class="space-y-4">
+    <div *ngFor="let activitat of assignatura.activitats">
       <!-- Header de l'activitat per desplegar-la -->
-      <div
-        (click)="toggleActivitat(activitat.id)"
-        class="p-4 bg-white rounded-lg shadow-sm cursor-pointer hover:bg-gray-100 transition flex items-center"
-      >
-        <!-- Data de l'activitat -->
-        <div class="text-gray-500 w-1/6">
-          {{ activitat.data | date: 'dd/MM/yyyy' }}
-        </div>
+      <div (click)="toggleActivitat(activitat.id)" class="flex items-center justify-between p-4 bg-gray-50 rounded-md shadow-sm hover:bg-gray-100 transition">
+        <!-- Nom i data de l'activitat -->
+          <span class="text-gray-900 font-medium">{{ activitat.nom }}</span>
+          <br />
+          <span class="text-gray-500 text-sm">{{ activitat.data | date: 'dd/MM/yyyy' }}</span>
 
-        <!-- Nom de l'activitat -->
-        <h4 class="font-medium text-gray-700 flex-1 px-4">{{ activitat.nom }}</h4>
+        <!-- <div class="flex-1 px-4">
+          <span class="text-gray-900 font-medium">{{ activitat.nom }}</span>
+          <br />
+          <span class="text-gray-500 text-sm">{{ activitat.data | date: 'dd/MM/yyyy' }}</span>
+        </div> -->
 
         <!-- Botó de 3 punts per obrir el menú -->
         <div class="relative">
-          <button
-            (click)="toggleMenuContextual(activitat.id); $event.stopPropagation()"
-            class="w-8 h-8 bg-gray-200 text-gray-600 rounded-full flex items-center justify-center hover:bg-gray-300 transition"
-          >
-            &#x22EE; <!-- 3 punts verticals -->
-          </button>
 
           <!-- Menú amb les opcions Editar, Eliminar i Qualificar -->
-          <div
-            *ngIf="menuObertId === activitat.id"
-            class="absolute right-0 mt-2 w-40 bg-white border rounded-md shadow-lg z-50 menu-contextual"
-          >
-            <ul>
-              <li
-                (click)="editarActivitat(activitat); $event.stopPropagation()"
-                class="px-4 py-2 hover:bg-gray-100 cursor-pointer"
-              >
-                ✏️ Editar
-              </li>
-              <li
-                (click)="eliminarActivitat(activitat); $event.stopPropagation()"
-                class="px-4 py-2 hover:bg-gray-100 cursor-pointer text-red-600"
-              >
-                ❌ Eliminar
-              </li>
-              <li
-                (click)="qualificarActivitat(activitat); $event.stopPropagation()"
-                class="px-4 py-2 hover:bg-gray-100 cursor-pointer text-green-600"
-              >
-                📋 Qualificar
-              </li>
-            </ul>
-          </div>
+          <button mat-icon-button [matMenuTriggerFor]="menu">
+            <mat-icon>more_vert</mat-icon>
+          </button>
 
+          <mat-menu #menu="matMenu">
+            <button mat-menu-item (click)="editarActivitat(activitat)">Editar</button>
+            <button mat-menu-item (click)="eliminarActivitat(activitat)">Eliminar</button>
+            <button mat-menu-item (click)="qualificarActivitat(activitat)">Qualificar</button>
+          </mat-menu>
         </div>
       </div>
 
@@ -71,6 +48,7 @@
       <div *ngIf="activitatDesplegada === activitat.id" class="p-4 mt-2 bg-gray-100 rounded-lg shadow-inner">
         <p class="text-gray-600">Detalls de l'activitat "{{ activitat.nom }}"</p>
         <p class="text-gray-500">Data: {{ activitat.data | date: 'dd/MM/yyyy' }}</p>
+        <p class="text-gray-500">Descripció: {{ activitat.descripcio }}</p>
 
         <!-- Llista de Competències -->
         <div class="mt-4">
@@ -86,8 +64,8 @@
           </div>
         </div>
       </div>
-    </li>
-  </ul>
+    </div>
+  </div>
 
   <!-- Formulari modal per afegir o editar activitats -->
   <app-activitat-form-modal

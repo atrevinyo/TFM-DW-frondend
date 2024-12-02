@@ -4,13 +4,15 @@ import { Activitat, Assignatura, Competencia } from '../models/models'; // Impor
 import { ActivitatFormModalComponent } from '../activitat-form-modal/activitat-form-modal.component'; // Import del formulari modal
 import { QualificarActivitatComponent } from '../qualificar-activitat/qualificar-activitat.component';
 import { AssignaturesService } from '../services/assignatures.service';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-activitat-list',
   templateUrl: './activitat-list.component.html',
   styleUrls: ['./activitat-list.component.css'],
   standalone: true,
-  imports: [CommonModule, ActivitatFormModalComponent,DatePipe, QualificarActivitatComponent],
+  imports: [CommonModule, ActivitatFormModalComponent,DatePipe, QualificarActivitatComponent, MatMenuModule, MatIconModule ],
 })
 export class ActivitatListComponent {
 

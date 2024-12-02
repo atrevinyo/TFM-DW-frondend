@@ -26,43 +26,20 @@
 
       <!-- Menú de tres punts vertical -->
       <div class="relative">
-        <button
-          (click)="toggleMenu(alumne)"
-          class="w-8 h-8 bg-gray-200 text-gray-600 rounded-full flex items-center justify-center hover:bg-gray-300 transition"
-        >
-          <!-- Icona de tres punts vertical -->
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v.01M12 12v.01M12 18v.01" />
-          </svg>
+        <button mat-icon-button [matMenuTriggerFor]="menu">
+          <mat-icon>more_vert</mat-icon>
         </button>
 
-        <!-- Menú contextual amb opcions d'editar i eliminar -->
-        <div *ngIf="alumne.mostrarMenu" class="absolute right-0 mt-2 w-40 bg-white rounded-md shadow-lg z-50">
-          <ul class="py-1">
-            <li>
-              <button
-                (click)="editarAlumne(alumne)"
-                class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-              >
-                Editar
-              </button>
-            </li>
-            <li>
-              <button
-                (click)="eliminarAlumne(alumne)"
-                class="block w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-gray-100"
-              >
-                Eliminar
-              </button>
-            </li>
-          </ul>
-        </div>
+        <mat-menu #menu="matMenu">
+          <button mat-menu-item (click)="editarAlumne(alumne)">Editar</button>
+          <button mat-menu-item (click)="eliminarAlumne(alumne)">Eliminar</button>
+        </mat-menu>
       </div>
     </div>
   </div>
 </div>
 
-{{ assignatura | json }}
+<!-- {{ assignatura | json }} -->
 
 <!-- Modal per afegir o editar un alumne -->
 <div *ngIf="mostraFormulari" class="fixed inset-0 bg-gray-800 bg-opacity-75 flex items-center justify-center z-50">
