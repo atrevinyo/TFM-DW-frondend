@@ -1,22 +1,27 @@
 <div class="p-6 bg-white rounded-md shadow-md relative">
   <!-- Contenidor per al text i el botó alineats horitzontalment -->
-  <div class="flex items-center justify-between mb-4">
+  <div class="flex justify-between items-center mb-4">
     <h2 class="text-xl font-semibold">Llista d'alumnes</h2>
-    <button
-      (click)="afegirAlumne()"
-      class="w-10 h-10 bg-blue-600 text-white rounded-full flex items-center justify-center hover:bg-blue-700 transition"
-      title="Afegir Alumne"
-    >
-      +
-    </button>
+    <div class="flex space-x-2">
+      <button
+        (click)="afegirAlumne()"
+        class="w-8 h-8 bg-blue-600 text-white rounded-full flex items-center justify-center hover:bg-blue-700 transition"
+        title="Afegir Alumne"
+      >
+        +
+      </button>
+      <label for="uploadExcel" class="cursor-pointer w-8 h-8 bg-green-600 text-white rounded-full flex items-center justify-center hover:bg-green-700 transition" title="Importar alumnes">
+        <mat-icon>upload</mat-icon>
+      </label>
+      <input id="uploadExcel" type="file" (change)="importarAlumnes($event)" class="hidden" accept=".xlsx, .xls" />
+    </div>
   </div>
-
   <!-- Llista d'alumnes amb avatars -->
   <div class="space-y-4">
     <div *ngFor="let alumne of assignatura.alumnes" class="flex items-center justify-between p-4 bg-gray-50 rounded-md shadow-sm hover:bg-gray-100 transition">
       <!-- Avatar i nom -->
       <div class="flex items-center space-x-4">
-        <!-- Avatar de l'alumne (placeholder) -->
+        <!-- Avatar de l'alumne -->
         <div class="w-10 h-10 bg-gray-300 rounded-full flex items-center justify-center text-white font-semibold">
           {{ alumne.nom.charAt(0).toUpperCase() }}
         </div>

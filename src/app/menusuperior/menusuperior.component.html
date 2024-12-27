@@ -5,6 +5,10 @@
     <span class="text-2xl font-bold">App-notes</span>
   </div>
 
+  <!-- Nom de l'assignatura seleccionada -->
+  <div *ngIf="assignaturaSeleccionada" class="text-lg font-medium text-gray-600">
+    {{ assignaturaSeleccionada }}
+  </div>
   <!-- Botons de la dreta -->
   <div class="flex items-center space-x-4">
     <!-- Botó per afegir assignatura  -->
@@ -12,8 +16,8 @@
       mat-icon-button
       *ngIf="mostrarBotoAfegirAssignatura"
       (click)="afegirAssignatura()"
-      matTooltip="Afegeix una nova assignatura"
-      aria-label="Afegir assignatura"
+      matTooltip="Afegeix una nova classe"
+      aria-label="Afegir classe"
     >
       <mat-icon>add</mat-icon>
     </button>

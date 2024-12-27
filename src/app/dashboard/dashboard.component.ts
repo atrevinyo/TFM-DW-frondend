@@ -27,6 +27,7 @@ export class DashboardComponent implements OnInit {
   modalObert = false;
   assignaturaAEditar: Assignatura | null = null;
   mostrarAssignaturaList: boolean = true;
+  assignaturaSeleccionada?: string;
 
 
   constructor(private assignaturesService: AssignaturesService, private router: Router,  private route: ActivatedRoute, private toastr: ToastrService, private cdr: ChangeDetectorRef, private assignaturesStoreService:AssignaturesStoreService ) { }
@@ -40,6 +41,7 @@ export class DashboardComponent implements OnInit {
         this.mostrarAssignaturaList = this.router.url === '/dashboard';
       });
       this.carregarMateries()
+
     }
 
 
@@ -170,6 +172,7 @@ export class DashboardComponent implements OnInit {
   }
 
   seleccionarAssignatura(assignatura: Assignatura): void {
+    this.assignaturaSeleccionada = assignatura.nom;
     this.assignaturesStoreService.setAssignaturaSeleccionada(assignatura);
     console.log(assignatura);
     this.router.navigate([`/dashboard/assignatura`, assignatura.id],

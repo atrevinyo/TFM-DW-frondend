@@ -57,7 +57,6 @@ export class AuthService {
     this.router.navigate(['/login']);
   }
 
-
   // Comprova si l'usuari està autenticat
   isAuthenticated(): boolean {
     return !!localStorage.getItem(this.tokenKey);

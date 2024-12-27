@@ -1,17 +1,27 @@
-<mat-tab-group dynamicHeight>
+<mat-tab-group dynamicHeight
+(selectedIndexChange)="onTabChange($event)"
+>
   <div *ngIf="assignatura">
     <!-- Pestanya per la llista d'alumnes -->
     <mat-tab label="Alumnes">
       <div class="tab-content">
-        <app-alumne-list [assignatura]="assignatura!"></app-alumne-list>
+        <app-alumne-list *ngIf="selectedTab === 0" [assignatura]="assignatura!"></app-alumne-list>
       </div>
     </mat-tab>
 
     <!-- Pestanya per la llista d'activitats -->
     <mat-tab label="Activitats">
       <div class="tab-content">
-        <app-activitat-list [assignatura]="assignatura!"></app-activitat-list>
+        <app-activitat-list *ngIf="selectedTab === 1" [assignatura]="assignatura!"></app-activitat-list>
       </div>
     </mat-tab>
+
+    <!-- Pestanya per l'informe de notes -->
+    <mat-tab label="Informe de notes">
+      <div class="tab-content">
+        <app-informe-notes *ngIf="selectedTab === 2" [assignatura]="assignatura!"></app-informe-notes>
+      </div>
+    </mat-tab>
+
   </div>
 </mat-tab-group>

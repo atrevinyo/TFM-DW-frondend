@@ -6,7 +6,7 @@
     <!-- Botó per afegir una nova activitat -->
     <button
       (click)="afegirActivitat()"
-      class="w-10 h-10 bg-blue-600 text-white rounded-full flex items-center justify-center hover:bg-blue-700 transition"
+      class="w-8 h-8 bg-blue-600 text-white rounded-full flex items-center justify-center hover:bg-blue-700 transition"
     >
       +
     </button>
@@ -16,22 +16,18 @@
   <div class="space-y-4">
     <div *ngFor="let activitat of assignatura.activitats">
       <!-- Header de l'activitat per desplegar-la -->
-      <div (click)="toggleActivitat(activitat.id)" class="flex items-center justify-between p-4 bg-gray-50 rounded-md shadow-sm hover:bg-gray-100 transition">
+      <div
+        (click)="toggleActivitat(activitat.id)"
+        class="flex items-center justify-between p-4 bg-gray-50 rounded-md shadow-sm hover:bg-gray-100 transition"
+      >
         <!-- Nom i data de l'activitat -->
-          <span class="text-gray-900 font-medium">{{ activitat.nom }}</span>
-          <br />
-          <span class="text-gray-500 text-sm">{{ activitat.data | date: 'dd/MM/yyyy' }}</span>
-
-        <!-- <div class="flex-1 px-4">
-          <span class="text-gray-900 font-medium">{{ activitat.nom }}</span>
-          <br />
-          <span class="text-gray-500 text-sm">{{ activitat.data | date: 'dd/MM/yyyy' }}</span>
-        </div> -->
+        <div class="flex items-center w-full">
+          <span class="flex-1 text-gray-900 font-medium truncate">{{ activitat.nom }}</span>
+          <span class="text-gray-500 text-sm w-24 text-right mr-20">{{ activitat.data | date: 'dd/MM/yyyy' }}</span>
+        </div>
 
         <!-- Botó de 3 punts per obrir el menú -->
         <div class="relative">
-
-          <!-- Menú amb les opcions Editar, Eliminar i Qualificar -->
           <button mat-icon-button [matMenuTriggerFor]="menu">
             <mat-icon>more_vert</mat-icon>
           </button>
@@ -81,17 +77,11 @@
       <!-- Contingut del component de qualificació -->
       <app-qualificar-activitat
         *ngIf="activitatSeleccionada"
+        [assignatura]="assignatura"
         [activitat]="activitatSeleccionada!"
         [alumnes]="assignatura.alumnes"
+        (onSave)="tancarQualificarModal()"
       ></app-qualificar-activitat>
-
-      <!-- Botó per tancar el modal -->
-      <button
-        (click)="tancarQualificarModal()"
-        class="mt-4 px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600"
-      >
-        Tancar
-      </button>
     </div>
   </div>
 </div>

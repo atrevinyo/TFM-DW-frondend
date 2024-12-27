@@ -30,15 +30,15 @@ export class LoginComponent {
   this.authService.login(email, password).subscribe({
     next: (isLoggedIn) => {
       if (isLoggedIn) {
-        this.toastr.success('Login correcte', 'Èxit');
+        this.toastr.success('Login correcte');
         this.router.navigate(['/dashboard']);
       } else {
-        this.toastr.error('Credencials incorrectes', 'Error');
+        this.toastr.error('Credencials incorrectes');
       }
     },
     error: (error) => {
       console.error('Error inesperat en el login:', error);
-      this.toastr.error('Hi ha hagut un error inesperat', 'Error');
+      this.toastr.error('Hi ha hagut un error inesperat');
     }
   });
 }

@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
-
 import { environments } from '../../environments/environments';
 import { Assignatura, Materia } from '../models/models';
 
@@ -19,15 +18,7 @@ export class AssignaturesService {
   // Mètode per obtenir totes les assignatures
   getAssignatures(): Observable<Assignatura[]> {
     return this.http.get<Assignatura[]>(`${ this.baseUrl }/assignatures`);
-
-
   }
-
-  // Mètode per obtenir una assignatura pel seu ID
-  getAssignaturaById(id: string): Observable<Assignatura> {
-    return this.http.get<Assignatura>(`${this.baseUrl}/assignatures/${ id }`);
-  }
-
    // Mètode per afegir una nova assignatura
   addAssignatura(assignatura: Assignatura): Observable<Assignatura> {
     console.log('Dades que s\'estan enviant:', assignatura);
@@ -42,11 +33,8 @@ export class AssignaturesService {
         })
       );
   }
-
   // Mètode per actualitzar una assignatura existent
   updateAssignatura(updatedAssignatura: Assignatura): Observable<Assignatura> {
-
-    console.log("ESTIC ACTUALITZANT l'ASSIGNATURA", updatedAssignatura);
 
     return this.http.patch<Assignatura>(`${this.baseUrl}/assignatures/${updatedAssignatura.id}`, updatedAssignatura)
     .pipe(
@@ -58,7 +46,6 @@ export class AssignaturesService {
         return throwError(() => new Error('Error en actualitzar l\'assignatura. Si us plau, revisa el backend.'));
       })
     );
-
   }
 
   // Mètode per eliminar una assignatura
@@ -66,10 +53,8 @@ export class AssignaturesService {
     return this.http.delete<Assignatura>(`${this.baseUrl}/assignatures/${id}`);
   }
 
-
   getMateries(): Observable<Materia[]> {
     return this.http.get<Materia[]>(`${this.baseUrl}/materies`);
   }
-
 
 }

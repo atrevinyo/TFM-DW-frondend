@@ -22,6 +22,7 @@ export class MenusuperiorComponent {
 
   @Input() mostrarBotoAfegirAssignatura: any = null; // Propietat d per saber si hi ha una assignatura seleccionada
   @Output() onAfegirAssignatura = new EventEmitter<void>();
+  @Input() assignaturaSeleccionada?: string;
 
   constructor(private authService: AuthService, private router: Router) {}
 

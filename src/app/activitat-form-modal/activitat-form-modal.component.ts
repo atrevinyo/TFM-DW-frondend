@@ -2,13 +2,14 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { Activitat, Competencia } from '../models/models';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 @Component({
   selector: 'app-activitat-form-modal',
   templateUrl: './activitat-form-modal.component.html',
   styleUrls: ['./activitat-form-modal.component.css'],
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, MatTooltipModule],
 })
 export class ActivitatFormModalComponent {
   @Input() activitat?: Activitat;
@@ -23,16 +24,20 @@ export class ActivitatFormModalComponent {
       nom: ['', Validators.required],
       descripcio: ['', Validators.required],
       data: ['', Validators.required],
-      competencies: [[]] // Array per gestionar les competències seleccionades
+      competencies: [[], [Validators.required, Validators.minLength(1)]], // S'ha de seleccionar almenys una competència
     });
   }
 
   ngOnInit(): void {
     if (this.activitat) {
+      const dataISO = this.activitat.data
+      ? new Date(this.activitat.data).toISOString().split('T')[0]
+      : null;
+
       this.activitatForm.patchValue({
         nom: this.activitat.nom,
         descripcio: this.activitat.descripcio,
-        data: this.activitat.data,
+        data: dataISO,
         competencies: this.activitat.competencies.map(comp => comp.codi)
       });
     }

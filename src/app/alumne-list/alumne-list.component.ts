@@ -1,4 +1,4 @@
-import { Component, ElementRef, HostListener, Input, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, ElementRef, HostListener, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import {  Alumne, Assignatura } from '../models/models';
@@ -6,6 +6,8 @@ import { AssignaturesService } from '../services/assignatures.service';
 import { ToastrService } from 'ngx-toastr';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatIconModule } from '@angular/material/icon';
+import * as XLSX from 'xlsx';
+import { v4 as uuidv4 } from 'uuid';
 
 @Component({
   selector: 'app-alumne-list',
@@ -20,7 +22,7 @@ export class AlumneListComponent implements OnInit {
   mostraFormulari: boolean = false;
   alumneForm: FormGroup;
 
-  constructor(private fb: FormBuilder, private eRef: ElementRef, private assignaturesService: AssignaturesService, private toastr: ToastrService ) {
+  constructor(private fb: FormBuilder, private eRef: ElementRef, private assignaturesService: AssignaturesService, private toastr: ToastrService, private cdr: ChangeDetectorRef  ) {
     this.alumneForm = this.fb.group({
       nom: ['']
     });
@@ -76,14 +78,15 @@ export class AlumneListComponent implements OnInit {
         // Afegir nou alumne
         console.log("ABANS DE FER EL PUSH", this.assignatura)
 
-        // const { userId, ...restAssignatura } = this.assignatura; // Extreu la propietat userId
+
         // this.assignatura = restAssignatura; // Assigna l'objecte sense userId
 
-        this.assignatura.alumnes.push({ id: "", nom, notes: [] });
+        this.assignatura.alumnes.push({ id: uuidv4(), nom, notes: [] });
 
         console.log("DESPRES FER EL PUSH", this.assignatura)
 
       }
+
 
       this.assignaturesService.updateAssignatura(this.assignatura)
       .subscribe({
@@ -96,6 +99,12 @@ export class AlumneListComponent implements OnInit {
               this.toastr.error('Error en afegir l\'alumne');
           }
       });
+
+       // Crear un nou objecte per a la detecció de canvis
+       this.assignatura = { ...this.assignatura };
+
+      // Opcional: forçar la detecció de canvis
+      this.cdr.detectChanges();
 
       this.mostraFormulari = false;
       this.alumneForm.reset();
@@ -111,6 +120,19 @@ export class AlumneListComponent implements OnInit {
   // Elimina un alumne de l'assignatura
   eliminarAlumne(alumne: Alumne) {
     this.assignatura.alumnes = this.assignatura.alumnes.filter(a => a.id !== alumne.id);
+    this.assignaturesService.updateAssignatura(this.assignatura)
+    .subscribe({
+        next: (assignaturaActualitzada) => {
+            this.assignatura = assignaturaActualitzada;
+            this.toastr.success('Alumne eliminat correctament!');
+        },
+        error: (err) => {
+            console.error('Error en afegir l\'alumne:', err);
+            this.toastr.error('Error a l\'elimnar alumne l\'alumne');
+        }
+    });
+
+
   }
 
   // Listener per detectar clics fora del menú
@@ -126,4 +148,49 @@ export class AlumneListComponent implements OnInit {
       });
     }
   }
+
+
+  importarAlumnes(event: Event): void {
+    const target = event.target as HTMLInputElement;
+    if (target.files && target.files.length > 0) {
+      const file = target.files[0];
+      const reader = new FileReader();
+
+      reader.onload = (e: any) => {
+        const data = new Uint8Array(e.target.result);
+        const workbook = XLSX.read(data, { type: 'array' });
+
+        // Els alumneshan d' estar a la primera fulla del fitxer
+        const firstSheetName = workbook.SheetNames[0];
+        const worksheet = workbook.Sheets[firstSheetName];
+        const alumnesData = XLSX.utils.sheet_to_json(worksheet);
+
+        // Convertim les dades llegides a la estructura JSON
+        const nousAlumnes = alumnesData.map((row: any) => ({
+          id: uuidv4(),
+          nom: row.Nom || '', // Només si la columna es diu "Nom"
+          notes: [] // Inicialitzem notes buides
+        }));
+
+        // Afegim els alumnes a l'assignatura
+        this.assignatura.alumnes.push(...nousAlumnes);
+
+        this.actualitzarAssignatura();
+
+        console.log('Alumnes importats:', nousAlumnes);
+      };
+
+      reader.readAsArrayBuffer(file);
+    }
+  }
+
+  actualitzarAssignatura(): void {
+    this.assignaturesService
+      .updateAssignatura(this.assignatura)
+      .subscribe({
+        next: () => this.toastr.success('Alumnes importats correctament!'),
+        error: (err) => this.toastr.error('Error important alumnes:', err),
+      });
+  }
+
 }

@@ -1,9 +1,9 @@
-/* Mostra el tooltip quan el quadrat de la competència és seleccionat */
-.relative:hover .tooltip-content {
-  display: block;
-  /* word-wrap: break-word; Trenca només si la paraula és massa llarga */
-  max-width: 400px
-  border: 1px solid red;
-
+.custom-tooltip {
+  font-size: 14px; /* Augmenta la mida del text */
+  padding: 20px 35px; /* Augmenta l'espai interior */
+  background-color: #333; /* Canvia el color de fons */
+  color: #fff; /* Canvia el color del text */
+  border-radius: 8px; /* Arrodoneix les cantonades */
+  max-width: 450px; /* Limita l'amplada */
+  text-align: center; /* Centra el text */
 }
-

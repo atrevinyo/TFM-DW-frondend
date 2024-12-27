@@ -1,0 +1,60 @@
+<div class="overflow-x-auto p-4 rounded-lg shadow-lg">
+  <h2 class="py-4 text-xl font-bold text-gray-800">Informe de Notes</h2>
+
+  <table class="min-w-full bg-white border border-gray-300 rounded-lg overflow-hidden">
+    <!-- Capçalera -->
+    <thead class="bg-gradient-to-r from-gray-100 to-gray-200">
+      <tr>
+        <th class="px-6 py-3 text-center font-medium text-gray-800">Alumne</th>
+        <ng-container *ngFor="let competencia of competencias">
+          <th
+          class="cursor-pointer px-6 py-3 text-center font-medium text-gray-800"
+          matTooltip="{{ competencia.descripcio }}"
+          matTooltipPosition="above"
+
+         >
+            {{ competencia.nom }}
+          </th>
+        </ng-container>
+        <th class="px-6 py-3 text-center font-medium text-gray-800">Total</th>
+      </tr>
+    </thead>
+
+    <!-- Cos de la taula -->
+    <tbody>
+      <tr
+        *ngFor="let alumne of alumnes; let i = index"
+        [class.bg-gray-50]="i % 2 === 1"
+        class="border-b hover:bg-gray-100 transition"
+      >
+        <td class="px-6 py-3 text-left font-medium text-gray-800">{{ alumne.nom }}</td>
+        <ng-container *ngFor="let competencia of competencias">
+          <td
+            class="px-6 py-3 text-center font-semibold"
+            [class.text-red-500]="getNotaMitjana(alumne, competencia.codi) !== '' && getNotaMitjana(alumne, competencia.codi) < '2'"
+          >
+            {{ getNotaMitjana(alumne, competencia.codi) || '-' }}
+          </td>
+        </ng-container>
+        <td class="px-6 py-3 text-center font-bold">
+          {{ getTotalMitjanaAlumne(alumne) || '-' }}
+        </td>
+      </tr>
+    </tbody>
+
+    <!-- Peu de la taula -->
+    <tfoot>
+      <tr class="bg-gray-100 font-bold">
+        <td class="px-6 py-3 text-left text-gray-800">Mitjana Total</td>
+        <ng-container *ngFor="let competencia of competencias">
+          <td class="px-6 py-3 text-center">
+            {{ getMitjanaCompetencia(competencia.codi) || '-' }}
+          </td>
+        </ng-container>
+        <td class="px-6 py-3 text-center">
+          {{ getMitjanaCompetencia('total') || '-' }}
+        </td>
+      </tr>
+    </tfoot>
+  </table>
+</div>
