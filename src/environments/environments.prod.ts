@@ -3,5 +3,5 @@
 
 
 export const environments = {
-  baseURL: "tfm-dw-backend-production.up.railway.app"
+  baseURL: "https://tfm-dw-backend-production.up.railway.app"
 }
