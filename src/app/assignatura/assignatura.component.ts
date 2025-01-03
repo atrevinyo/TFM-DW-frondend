@@ -38,8 +38,8 @@ export class AssignaturaComponent implements OnInit {
   }
 
   onTabChange(index: number): void {
-    // this.assignatura = { ...this.assignatura }; // Força la propagació dels canvis
-    // this.cdr.detectChanges();
+    this.assignatura = { ...this.assignatura }; // Força la propagació dels canvis
+    this.cdr.detectChanges();
     this.selectedTab = index;
   }
 

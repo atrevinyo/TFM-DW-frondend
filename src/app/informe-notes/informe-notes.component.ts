@@ -28,16 +28,33 @@ export class InformeNotesComponent implements OnInit {
     }
 
   // Agrupa totes les competències de les activitats de l'assignatura
+  // getCompetenciesUnificades(): Competencia[] {
+  //   const allCompetencies = this.assignatura.activitats.flatMap(
+  //     activitat => activitat.competencies
+  //   );
+  //   const uniqueCompetencies = allCompetencies.filter(
+  //     (competencia, index, self) =>
+  //       index === self.findIndex(c => c.codi === competencia.codi)
+  //   );
+  //   return uniqueCompetencies;
+  // }
+
   getCompetenciesUnificades(): Competencia[] {
     const allCompetencies = this.assignatura.activitats.flatMap(
       activitat => activitat.competencies
     );
+
     const uniqueCompetencies = allCompetencies.filter(
       (competencia, index, self) =>
         index === self.findIndex(c => c.codi === competencia.codi)
     );
+
+    // Ordenem les competències pel camp 'codi'
+    uniqueCompetencies.sort((a, b) => a.codi.localeCompare(b.codi));
+
     return uniqueCompetencies;
   }
+
 
   // Calcula la nota mitjana d'un alumne per una competència específica
 getNotaMitjana(alumne: Alumne, competenciaId: string): string | number {
